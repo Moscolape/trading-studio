@@ -94,3 +94,18 @@ To run the application locally, follow these steps:
 
    ```bash
    git clone https://github.com/Moscolape/trading-studio.git
+   cd trading-studio
+
+2. **Install dependencies**:
+
+   ```bash
+   npm install
+
+3. **Run development server**:
+
+   ```bash
+   npm run dev
+
+4. **Open in your browser**:
+
+Visit [http://localhost:3000](http://localhost:3000) to view the app running locally.
