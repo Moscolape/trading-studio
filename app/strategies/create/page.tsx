@@ -231,7 +231,7 @@ const StrategyCreation = () => {
           </div>
         )}
         {step === 3 && <StrategyResults status={status} />}
-        <div className="flex justify-between mt-4">
+        <div className="flex justify-between mt-4 flex-col sm:flex-row">
           {step > 0 && <Button onClick={onPrev} text="Previous" />}
           {step < 3 ? (
             <Button onClick={onNext} text="Next" />

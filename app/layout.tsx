@@ -1,4 +1,6 @@
-import { ReactNode } from "react";
+"use client"
+
+import { ReactNode, useState } from "react";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -9,22 +11,24 @@ interface RootLayoutProps {
 }
 
 const RootLayout = ({ children }: RootLayoutProps) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <html lang="en">
       <body className="bg-gray-100 text-gray-900">
         <div className="flex h-screen">
-          {/* Sidebar on the left */}
-          <Sidebar />
+          
+          <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} setIsOpen={setIsSidebarOpen} />
 
-          {/* Main content area */}
           <div className="flex-1 flex flex-col">
-            {/* Header */}
-            <Header />
+            <Header toggleSidebar={toggleSidebar} />
 
-            {/* Main content */}
             <main className="flex-1 p-6">{children}</main>
 
-            {/* Footer */}
             <Footer />
           </div>
         </div>
