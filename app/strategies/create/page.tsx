@@ -42,14 +42,13 @@ const StrategyCreation = () => {
   useEffect(() => {
     const strategiesFromLocalStorage = loadStrategyFromLocalStorage();
     setStrategies(strategiesFromLocalStorage);
-  
+
     const savedStatus = localStorage.getItem("simulationStatus");
     const savedProgress = localStorage.getItem("simulationProgress");
-  
+
     if (savedStatus) setStatus(savedStatus);
     if (savedProgress) setProgress(Number(savedProgress));
   }, []);
-  
 
   const {
     control,
@@ -80,7 +79,6 @@ const StrategyCreation = () => {
     addStrategy(strategy);
     alert("Strategy Saved!");
   };
-  
 
   const handleSaveDraft = () => {
     const currentValues = getValues();
@@ -92,24 +90,24 @@ const StrategyCreation = () => {
     setStatus("In Progress");
     localStorage.setItem("simulationStatus", "In Progress");
     let simulatedProgress = 0;
-  
+
     const interval = setInterval(() => {
       simulatedProgress += 10;
       setProgress(simulatedProgress);
       localStorage.setItem("simulationProgress", String(simulatedProgress));
-  
+
       if (simulatedProgress >= 100) {
         clearInterval(interval);
         setStatus("Completed");
         localStorage.setItem("simulationStatus", "Completed");
-  
+
         const results = { profit: 1000, totalTrades: 50 };
         localStorage.setItem("simulationResults", JSON.stringify(results));
-  
+
         alert("Strategy simulation completed!");
       }
     }, 500);
-  };  
+  };
 
   useEffect(() => {
     if (savedStrategy) {
@@ -124,7 +122,9 @@ const StrategyCreation = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow">
-      <h1 className="text-2xl font-bold mb-4 text-blue-500">Create New Strategy</h1>
+      <h1 className="text-2xl font-bold mb-4 text-blue-500">
+        Create New Strategy
+      </h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         {step === 0 && (
           <div>
@@ -141,6 +141,10 @@ const StrategyCreation = () => {
                       String(val),
                     ])
                   )}
+                  onChange={(updatedRules) => {
+                    const updatedScanner = { ruleKey: updatedRules.ruleKey };
+                    setValue("scanner", updatedScanner);
+                  }}
                 />
               )}
             />
@@ -149,6 +153,7 @@ const StrategyCreation = () => {
             )}
           </div>
         )}
+
         {step === 1 && (
           <div>
             <Controller
@@ -164,6 +169,10 @@ const StrategyCreation = () => {
                       String(val),
                     ])
                   )}
+                  onChange={(updatedRules) => {
+                    const updatedBuy = { ruleKey: updatedRules.ruleKey };
+                    setValue("buy", updatedBuy);
+                  }}
                 />
               )}
             />
@@ -187,6 +196,10 @@ const StrategyCreation = () => {
                       String(val),
                     ])
                   )}
+                  onChange={(updatedRules) => {
+                    const updatedSell = { ruleKey: updatedRules.ruleKey };
+                    setValue("sell", updatedSell);
+                  }}
                 />
               )}
             />
@@ -195,6 +208,7 @@ const StrategyCreation = () => {
             )}
           </div>
         )}
+
         {step === 3 && (
           <div>
             <Controller
@@ -210,6 +224,10 @@ const StrategyCreation = () => {
                       String(val),
                     ])
                   )}
+                  onChange={(updatedRules) => {
+                    const updatedSimulation = { ruleKey: updatedRules.ruleKey };
+                    setValue("simulation", updatedSimulation);
+                  }}
                 />
               )}
             />
@@ -230,6 +248,7 @@ const StrategyCreation = () => {
             <div className="mt-2">Progress: {progress}%</div>
           </div>
         )}
+
         {step === 3 && <StrategyResults status={status} />}
         <div className="flex justify-between mt-4 flex-col sm:flex-row">
           {step > 0 && <Button onClick={onPrev} text="Previous" />}
